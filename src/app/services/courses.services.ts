@@ -6,19 +6,16 @@ import { map, shareReplay, tap } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class coursesServices {
-  courses$: Observable<Course[]>;
-  constructor(private http: HttpClient) {
-    this.courses$ = this.http.get<Course[]>("/api/courses").pipe(
+  constructor(private http: HttpClient) {}
+
+  allCourses(): Observable<Course[]> {
+    return this.http.get<Course[]>("/api/courses").pipe(
       map((courses) => courses["payload"].sort(sortCoursesBySeqNo)),
       shareReplay()
     );
   }
 
-  filterCategory(cat: string): Observable<Course[]> {
-    return this.courses$.pipe(
-      map((courses: Course[]) =>
-        courses.filter((course) => course.category === cat)
-      )
-    );
+  updateCourse(courseId: string, changes: Partial<Course>) {
+    return this.http.put(`/api/courses/${courseId}`, changes);
   }
 }
