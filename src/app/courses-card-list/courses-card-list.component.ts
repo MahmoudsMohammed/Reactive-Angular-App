@@ -3,7 +3,7 @@ import { Course } from "../model/course";
 import { CourseDialogComponent } from "../course-dialog/course-dialog.component";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { concatMap, filter, finalize, tap } from "rxjs/operators";
-import { coursesServices } from "../services/courses.services";
+import { coursesServices } from "../services/courses.service";
 
 @Component({
   selector: "courses-card-list",
@@ -37,7 +37,7 @@ export class CoursesCardListComponent {
         concatMap((data) => this.coursesService.updateCourse(course.id, data))
       )
       .subscribe((res) => {
-        this.updatedData.emit(true)
+        this.updatedData.emit(true);
       });
   }
 }

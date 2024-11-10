@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from "@angular/core";
 import { Course } from "../model/course";
 import { Observable } from "rxjs";
-import { coursesServices } from "../services/courses.services";
+import { coursesServices } from "../services/courses.service";
 import { map } from "rxjs/operators";
 
 @Component({
