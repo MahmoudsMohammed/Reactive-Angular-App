@@ -3,9 +3,6 @@ import { BehaviorSubject, Observable, of } from "rxjs";
 import { concatMap, finalize, tap } from "rxjs/operators";
 @Injectable()
 export class loadingService {
-  constructor() {
-    console.log("new instance created");
-  }
   private isLoad: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
