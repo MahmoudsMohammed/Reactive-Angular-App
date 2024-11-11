@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Course, sortCoursesBySeqNo } from "../model/course";
-import { map, shareReplay, tap } from "rxjs/operators";
+import { map, shareReplay } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 export class coursesServices {
