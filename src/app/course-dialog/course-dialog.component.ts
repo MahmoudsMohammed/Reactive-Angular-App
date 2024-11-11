@@ -1,27 +1,19 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation,
-} from "@angular/core";
+import { coursesServices } from "./../services/courses.service";
+import { AfterViewInit, Component, inject, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Course } from "../model/course";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import moment from "moment";
-import { catchError } from "rxjs/operators";
-import { throwError } from "rxjs";
+import { finalize, tap } from "rxjs/operators";
 
 @Component({
   selector: "course-dialog",
   templateUrl: "./course-dialog.component.html",
   styleUrls: ["./course-dialog.component.css"],
 })
-export class CourseDialogComponent implements AfterViewInit {
+export class CourseDialogComponent {
+  coursesServices = inject(coursesServices);
   form: FormGroup;
-
   course: Course;
 
   constructor(
@@ -39,11 +31,16 @@ export class CourseDialogComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {}
-
   save() {
     const changes = this.form.value;
-    this.dialogRef.close(changes);
+    console.log(changes);
+    this.coursesServices
+      .updateCourse(this.course.id, changes)
+      .pipe(
+        tap(() => this.dialogRef.close(changes)),
+        finalize(() => console.log("Course Completed"))
+      )
+      .subscribe();
   }
 
   close() {

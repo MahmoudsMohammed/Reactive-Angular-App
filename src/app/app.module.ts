@@ -81,11 +81,11 @@ import { loadingInterceptor } from "./services/loading.interceptor";
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: loadingInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: loadingInterceptor,
+    //   multi: true,
+    // },
   ],
 })
 export class AppModule {}

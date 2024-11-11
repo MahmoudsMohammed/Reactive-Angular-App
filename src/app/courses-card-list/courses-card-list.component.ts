@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Course } from "../model/course";
 import { CourseDialogComponent } from "../course-dialog/course-dialog.component";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { concatMap, filter, finalize, tap } from "rxjs/operators";
-import { coursesServices } from "../services/courses.service";
+import { tap } from "rxjs/operators";
 
 @Component({
   selector: "courses-card-list",
@@ -14,10 +13,7 @@ export class CoursesCardListComponent {
   @Input({ required: true }) courses: Course[];
   @Output() updatedData: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(
-    private dialog: MatDialog,
-    private coursesService: coursesServices
-  ) {}
+  constructor(private dialog: MatDialog) {}
 
   editCourse(course: Course) {
     const dialogConfig = new MatDialogConfig();
@@ -32,12 +28,7 @@ export class CoursesCardListComponent {
 
     dialogRef
       .afterClosed()
-      .pipe(
-        filter((data) => !!data),
-        concatMap((data) => this.coursesService.updateCourse(course.id, data))
-      )
-      .subscribe((res) => {
-        this.updatedData.emit(true);
-      });
+      .pipe(tap(() => this.updatedData.emit(true)))
+      .subscribe();
   }
 }
