@@ -1,9 +1,8 @@
-import { loadingService } from "./../services/loading.service";
 import { Component, inject, OnInit } from "@angular/core";
 import { Course } from "../model/course";
 import { Observable } from "rxjs";
 import { coursesServices } from "../services/courses.service";
-import { delay, finalize, map } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "home",
@@ -12,7 +11,6 @@ import { delay, finalize, map } from "rxjs/operators";
 })
 export class HomeComponent implements OnInit {
   courseService = inject(coursesServices);
-  loadingService = inject(loadingService);
   courses$: Observable<Course[]>;
   beginnerCourses$: Observable<Course[]>;
   advancedCourses$: Observable<Course[]>;
@@ -22,10 +20,7 @@ export class HomeComponent implements OnInit {
   }
 
   updateView() {
-    this.loadingService.loadOn();
-    this.courses$ = this.courseService.allCourses().pipe(
-      finalize(() => this.loadingService.loadOff())
-    );
+    this.courses$ = this.courseService.allCourses();
     this.beginnerCourses$ = this.courses$.pipe(
       map((courses) =>
         courses.filter((course) => course.category === "BEGINNER")

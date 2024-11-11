@@ -24,6 +24,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import {
+  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
 } from "@angular/common/http";
@@ -37,6 +38,7 @@ import { MessagesComponent } from "./messages/messages.component";
 import { SearchLessonsComponent } from "./search-lessons/search-lessons.component";
 import { LoadingComponent } from "./loading/loading.component";
 import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.component";
+import { loadingInterceptor } from "./services/loading.interceptor";
 
 @NgModule({
   declarations: [
@@ -77,6 +79,13 @@ import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.
     MatMomentDateModule,
     ReactiveFormsModule,
   ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: loadingInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class AppModule {}
