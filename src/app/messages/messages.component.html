@@ -1,4 +1,4 @@
-<div class="messages-container">
+<div class="messages-container" *ngIf="showMessage">
   <div class="message">Error</div>
-  <mat-icon class="close">close</mat-icon>
+  <mat-icon class="close" (click)="showMessage = false">close</mat-icon>
 </div>
