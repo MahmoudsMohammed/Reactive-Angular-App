@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { messageService } from "./../services/message.service";
+import { Component, inject, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { Message } from "../model/message";
 import { tap } from "rxjs/operators";
@@ -9,7 +10,12 @@ import { tap } from "rxjs/operators";
   styleUrls: ["./messages.component.css"],
 })
 export class MessagesComponent implements OnInit {
-  showMessage = true;
-
-  ngOnInit() {}
+  showMessage = false;
+  messageService = inject(messageService);
+  message$: Observable<string>;
+  ngOnInit() {
+    this.message$ = this.messageService.message$.pipe(
+      tap(() => (this.showMessage = true))
+    );
+  }
 }

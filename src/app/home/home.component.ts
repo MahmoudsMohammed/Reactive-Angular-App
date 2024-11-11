@@ -1,9 +1,10 @@
+import { messageService } from "./../services/message.service";
 import { loadingService } from "./../services/loading.service";
 import { Component, inject, OnInit } from "@angular/core";
 import { Course } from "../model/course";
-import { Observable } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { coursesServices } from "../services/courses.service";
-import { map } from "rxjs/operators";
+import { catchError, finalize, map, startWith } from "rxjs/operators";
 
 @Component({
   selector: "home",
@@ -13,6 +14,7 @@ import { map } from "rxjs/operators";
 export class HomeComponent implements OnInit {
   courseService = inject(coursesServices);
   loadingService = inject(loadingService);
+  messageService = inject(messageService);
   courses$: Observable<Course[]>;
   beginnerCourses$: Observable<Course[]>;
   advancedCourses$: Observable<Course[]>;
@@ -22,9 +24,14 @@ export class HomeComponent implements OnInit {
   }
 
   updateView() {
-    this.courses$ = this.loadingService.showUntilHide(
-      this.courseService.allCourses()
-    );
+    this.courses$ = this.loadingService
+      .showUntilHide(this.courseService.allCourses())
+      .pipe(
+        catchError((err) => {
+          this.messageService.setMessage("Internal Server Error");
+          return throwError(err);
+        })
+      );
 
     this.beginnerCourses$ = this.courses$.pipe(
       map((courses) =>
