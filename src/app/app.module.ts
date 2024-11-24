@@ -24,7 +24,6 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import {
-  HTTP_INTERCEPTORS,
   provideHttpClient,
   withInterceptorsFromDi,
 } from "@angular/common/http";
@@ -38,8 +37,6 @@ import { MessagesComponent } from "./messages/messages.component";
 import { SearchLessonsComponent } from "./search-lessons/search-lessons.component";
 import { LoadingComponent } from "./loading/loading.component";
 import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.component";
-import { loadingInterceptor } from "./services/loading.interceptor";
-import { CourseStore } from "./services/course.store";
 
 @NgModule({
   declarations: [
@@ -82,7 +79,6 @@ import { CourseStore } from "./services/course.store";
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    CourseStore,
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: loadingInterceptor,

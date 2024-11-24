@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, of } from "rxjs";
 import { concatMap, finalize, tap } from "rxjs/operators";
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class loadingService {
   private isLoad: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false

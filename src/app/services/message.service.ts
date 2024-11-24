@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
-@Injectable()
+@Injectable({ providedIn: "root" })
 export class messageService {
   private message = new BehaviorSubject<string>("");
   message$ = this.message.asObservable();
