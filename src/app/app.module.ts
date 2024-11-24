@@ -39,6 +39,7 @@ import { SearchLessonsComponent } from "./search-lessons/search-lessons.componen
 import { LoadingComponent } from "./loading/loading.component";
 import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.component";
 import { loadingInterceptor } from "./services/loading.interceptor";
+import { CourseStore } from "./services/course.store";
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { loadingInterceptor } from "./services/loading.interceptor";
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
+    CourseStore,
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: loadingInterceptor,
