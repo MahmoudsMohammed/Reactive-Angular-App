@@ -17,7 +17,7 @@ export class CourseStore {
   private courses = new BehaviorSubject<Course[]>([]);
   courses$ = this.courses.asObservable();
 
-  getCourses(): void {
+  private getCourses(): void {
     this.loadingService
       .showUntilHide(this.http.get("/api/courses"))
       .pipe(
@@ -38,5 +38,28 @@ export class CourseStore {
         data.filter((c) => c.category === cat).sort(sortCoursesBySeqNo)
       )
     );
+  }
+
+  updateCourse(changes: Partial<Course>, courseId: number): void {
+    const courses = this.courses.getValue();
+    const courseIndex = courses.findIndex((c) => c.id === courseId);
+    courses[courseIndex] = {
+      ...courses[courseIndex],
+      ...changes,
+    };
+    this.courses.next(courses);
+    this.saveUpdateCourse(courseId, changes);
+  }
+
+  private saveUpdateCourse(courseId: number, changes: Partial<Course>): void {
+    this.http
+      .put(`/api/courses/${courseId}`, changes)
+      .pipe(
+        catchError((err) => {
+          this.messageService.setMessage("Can't Save Now Please Try Later");
+          return throwError((err) => new Error(err));
+        })
+      )
+      .subscribe();
   }
 }

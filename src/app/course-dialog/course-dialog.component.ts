@@ -1,24 +1,17 @@
-import { messageService } from "./../services/message.service";
-import { loadingService } from "./../services/loading.service";
-import { coursesServices } from "./../services/courses.service";
 import { Component, inject, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Course } from "../model/course";
 import { FormBuilder, Validators, FormGroup } from "@angular/forms";
 import moment from "moment";
-import { catchError, tap } from "rxjs/operators";
-import { throwError } from "rxjs";
+import { CourseStore } from "../services/course.store";
 
 @Component({
   selector: "course-dialog",
   templateUrl: "./course-dialog.component.html",
   styleUrls: ["./course-dialog.component.css"],
-  providers: [loadingService, messageService],
 })
 export class CourseDialogComponent {
-  coursesServices = inject(coursesServices);
-  loadingService = inject(loadingService);
-  messageService = inject(messageService);
+  courseStore = inject(CourseStore);
   form: FormGroup;
   course: Course;
 
@@ -38,16 +31,8 @@ export class CourseDialogComponent {
 
   save() {
     const changes = this.form.value;
-    this.loadingService
-      .showUntilHide(this.coursesServices.updateCourse(this.course.id, changes))
-      .pipe(
-        catchError((err) => {
-          this.messageService.setMessage("Can't Save Change Please Try Later");
-          return throwError(err);
-        }),
-        tap(() => this.dialogRef.close(changes))
-      )
-      .subscribe();
+    this.courseStore.updateCourse(changes, this.course.id);
+    this.close();
   }
 
   close() {

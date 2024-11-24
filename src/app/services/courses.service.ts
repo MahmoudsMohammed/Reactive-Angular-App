@@ -15,7 +15,5 @@ export class coursesServices {
     );
   }
 
-  updateCourse(courseId: string, changes: Partial<Course>) {
-    return this.http.put(`/api/courses/${courseId}`, changes);
-  }
+  
 }
