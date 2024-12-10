@@ -21,9 +21,9 @@ export class authStoreService {
     this.LogOut$ = this.loginIn$.pipe(map((data) => !data));
   }
 
-  login(email: string, pass: string): Observable<User> {
+  login(email: string, password: string): Observable<User> {
     // this is http request make it hot as best practice to reduce requests
-    return this.http.post<User>("/api/login", { email, pass }).pipe(
+    return this.http.post<User>("/api/login", { email, password }).pipe(
       tap((user) => {
         this.user.next(user);
         localStorage.setItem("user", JSON.stringify(user));
