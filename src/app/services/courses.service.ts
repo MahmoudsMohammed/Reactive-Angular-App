@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Course, sortCoursesBySeqNo } from "../model/course";
 import { map, shareReplay } from "rxjs/operators";
+import { Lesson } from "../model/lesson";
 
 @Injectable({ providedIn: "root" })
 export class coursesServices {
@@ -15,5 +16,12 @@ export class coursesServices {
     );
   }
 
-  
+  searchLessons(keyword: string): Observable<Lesson[]> {
+    return this.http
+      .get<Lesson[]>(`/api/lessons?filter=${keyword}&pageSize=10000`)
+      .pipe(
+        map((res) => res["payload"]),
+        shareReplay(1)
+      );
+  }
 }

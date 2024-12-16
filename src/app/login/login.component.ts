@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   login() {
     const val = this.form.value;
     this.authStore.login(val.email, val.password).subscribe({
-      next: () => this.router.navigateByUrl("/courses"),
+      next: () => this.router.navigateByUrl("/home"),
       error: () => this.messageService.setMessage("Invalid Data"),
     });
   }
