@@ -1,3 +1,5 @@
+import { loadingService } from "./../services/loading.service";
+import { messageService } from "./../services/message.service";
 import { coursesServices } from "./../services/courses.service";
 import {
   AfterViewInit,
@@ -20,8 +22,9 @@ import {
   withLatestFrom,
   concatAll,
   shareReplay,
+  catchError,
 } from "rxjs/operators";
-import { merge, fromEvent, Observable, concat } from "rxjs";
+import { merge, fromEvent, Observable, concat, throwError } from "rxjs";
 import { Lesson } from "../model/lesson";
 
 @Component({
@@ -30,9 +33,24 @@ import { Lesson } from "../model/lesson";
   styleUrls: ["./search-lessons.component.css"],
 })
 export class SearchLessonsComponent {
-  constructor(private coursesServices: coursesServices) {}
+  constructor(
+    private coursesServices: coursesServices,
+    private messageService: messageService,
+    private loadingService: loadingService
+  ) {}
   lessons$: Observable<Lesson[]>;
   onSearch(search: string) {
-    this.lessons$ = this.coursesServices.searchLessons(search);
+    if (search !== "") {
+      this.lessons$ = this.loadingService
+        .showUntilHide(this.coursesServices.searchLessons(search))
+        .pipe(
+          catchError((e) => {
+            this.messageService.setMessage(
+              "There Is Some Error Please Try Later"
+            );
+            return throwError(e);
+          })
+        );
+    }
   }
 }
