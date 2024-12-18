@@ -20,7 +20,7 @@
     Search
   </button>
 
-  <ng-container *ngIf="lessons$ | async as lessons">
+  <ng-container *ngIf="lessons.length > 0">
     <table class="lessons-table mat-elevation-z7" style="margin-bottom: 20px">
       <thead>
         <th>#</th>
@@ -28,7 +28,11 @@
         <th>Duration</th>
       </thead>
 
-      <tr class="lesson-row" *ngFor="let lesson of lessons">
+      <tr
+        class="lesson-row"
+        *ngFor="let lesson of lessons"
+        (click)="onSelectLesson(lesson)"
+      >
         <td class="seqno-cell">{{ lesson.seqNo }}</td>
         <td class="description-cell">{{ lesson.description }}</td>
         <td class="duration-cell">{{ lesson.duration }}</td>

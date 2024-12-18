@@ -38,19 +38,26 @@ export class SearchLessonsComponent {
     private messageService: messageService,
     private loadingService: loadingService
   ) {}
-  lessons$: Observable<Lesson[]>;
+  lessons: Lesson[] = [];
+  selectedLesson: Lesson;
   onSearch(search: string) {
     if (search !== "") {
-      this.lessons$ = this.loadingService
+      this.loadingService
         .showUntilHide(this.coursesServices.searchLessons(search))
         .pipe(
+          tap((data) => (this.lessons = data)),
           catchError((e) => {
             this.messageService.setMessage(
               "There Is Some Error Please Try Later"
             );
             return throwError(e);
           })
-        );
+        )
+        .subscribe();
     }
+  }
+
+  onSelectLesson(lesson: Lesson) {
+    console.log(lesson);
   }
 }

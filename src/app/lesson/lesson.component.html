@@ -1,1 +1,5 @@
-<p>lesson works!</p>
+<div class="card">
+  <h2>{{ lesson.description }}</h2>
+  <p>Duration : {{ lesson.duration }}</p>
+  <iframe [src]="lesson.videoId" frameborder="0"></iframe>
+</div>
