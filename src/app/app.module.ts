@@ -37,6 +37,7 @@ import { MessagesComponent } from "./messages/messages.component";
 import { SearchLessonsComponent } from "./search-lessons/search-lessons.component";
 import { LoadingComponent } from "./loading/loading.component";
 import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.component";
+import { SecureUrl } from "./pipes/secureUrl.pipe";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.
     SearchLessonsComponent,
     LoadingComponent,
     CoursesCardListComponent,
+    SecureUrl,
   ],
   bootstrap: [AppComponent],
   imports: [
