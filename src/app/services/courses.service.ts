@@ -24,4 +24,8 @@ export class coursesServices {
         shareReplay(1)
       );
   }
+
+  courseDetails(id): Observable<Course> {
+    return this.http.get<Course>(`/api/courses/${id}`);
+  }
 }
