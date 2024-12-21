@@ -39,7 +39,7 @@ export class SearchLessonsComponent {
     private loadingService: loadingService
   ) {}
   lessons: Lesson[] = [];
-  selectedLesson: Lesson;
+  selectedLesson: Lesson = null;
   onSearch(search: string) {
     if (search !== "") {
       this.loadingService
@@ -58,6 +58,6 @@ export class SearchLessonsComponent {
   }
 
   onSelectLesson(lesson: Lesson) {
-    console.log(lesson);
+    this.selectedLesson = lesson;
   }
 }

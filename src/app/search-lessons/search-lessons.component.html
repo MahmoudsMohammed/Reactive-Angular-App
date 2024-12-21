@@ -20,7 +20,7 @@
     Search
   </button>
 
-  <ng-container *ngIf="lessons.length > 0">
+  <ng-container *ngIf="lessons.length > 0 && !selectedLesson">
     <table class="lessons-table mat-elevation-z7" style="margin-bottom: 20px">
       <thead>
         <th>#</th>
@@ -38,5 +38,9 @@
         <td class="duration-cell">{{ lesson.duration }}</td>
       </tr>
     </table>
+  </ng-container>
+
+  <ng-container *ngIf="selectedLesson">
+    <lesson [lesson]="selectedLesson"></lesson>
   </ng-container>
 </div>

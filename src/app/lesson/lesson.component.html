@@ -1,5 +1,8 @@
 <div class="card">
   <h2>{{ lesson.description }}</h2>
   <p>Duration : {{ lesson.duration }}</p>
-  <iframe [src]="lesson.videoId" frameborder="0"></iframe>
+  <iframe
+    [src]="'https://www.youtube.com/embed/' + lesson.videoId"
+    frameborder="0"
+  ></iframe>
 </div>
