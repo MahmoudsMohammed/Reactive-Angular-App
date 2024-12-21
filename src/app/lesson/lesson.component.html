@@ -1,4 +1,8 @@
 <div class="card">
+  <span class="back" (click)="back.emit(true)">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </span>
   <h2>{{ lesson.description }}</h2>
   <p>Duration : {{ lesson.duration }}</p>
   <iframe

@@ -1,4 +1,11 @@
-import { Component, Input } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { Lesson } from "../model/lesson";
 
 @Component({
@@ -6,6 +13,11 @@ import { Lesson } from "../model/lesson";
   templateUrl: "./lesson.component.html",
   styleUrls: ["./lesson.component.css"],
 })
-export class LessonComponent {
-  @Input() lesson: Lesson;
+export class LessonComponent implements OnChanges {
+  @Input({ required: true }) lesson: Lesson;
+  @Output() back = new EventEmitter<boolean>();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes["lesson"].currentValue);
+  }
 }

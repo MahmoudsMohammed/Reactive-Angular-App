@@ -41,6 +41,6 @@
   </ng-container>
 
   <ng-container *ngIf="selectedLesson">
-    <lesson [lesson]="selectedLesson"></lesson>
+    <lesson [lesson]="selectedLesson" (back)="selectedLesson = null"></lesson>
   </ng-container>
 </div>
