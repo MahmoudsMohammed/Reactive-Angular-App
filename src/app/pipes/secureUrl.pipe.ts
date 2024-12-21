@@ -7,6 +7,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class SecureUrl implements PipeTransform {
   _domSanitizer = inject(DomSanitizer);
   transform(value: any, ...args: any[]) {
-    return this._domSanitizer.bypassSecurityTrustUrl(value);
+    return this._domSanitizer.bypassSecurityTrustResourceUrl(value);
   }
 }

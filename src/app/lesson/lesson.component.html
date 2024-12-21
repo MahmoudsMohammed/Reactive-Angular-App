@@ -6,7 +6,11 @@
   <h2>{{ lesson.description }}</h2>
   <p>Duration : {{ lesson.duration }}</p>
   <iframe
-    [src]="'https://www.youtube.com/embed/' + lesson.videoId"
+    *ngIf="lesson.videoId; else placeholder"
+    [src]="'https://www.youtube.com/embed/' + lesson.videoId | secureUrl"
     frameborder="0"
   ></iframe>
+  <ng-template #placeholder>
+    <img src="../../assets/images/angular-logo.jpg" alt="" width="100" />
+  </ng-template>
 </div>
